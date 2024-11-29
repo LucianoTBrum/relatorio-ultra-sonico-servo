@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relatorio trabalho pratico Servo Motor</title>
+</head>
+<body>
+    <h1>Relatório do Projeto - Controle do motor Servo com sensor ultrassônico.</h1>
+
+    <nav>
+        <h2>SUMÁRIO</h2>
+        <ul>
+            <li><a href="#introducao">Introdução</a></li>
+            <li><a href="#objetivos">Objetivos</a></li>
+            <li><a href="#materiais">Materiais Utilizados</a></li>
+            <li><a href="#diagrama">Diagrama do Circuito</a></li>
+            <li><a href="#codigo">Código Fonte</a></li>
+            <li><a href="#procedimentos">Procedimentos</a></li>
+            <li><a href="#resultados">Resultados</a></li>
+            <li><a href="#discussao">Discussão</a></li>
+            <li><a href="#conclusao">Conclusão</a></li>
+            <li><a href="#referencias">Referências</a></li>
+        </ul>
+    </nav>
+
+    <section id="introducao">
+    <h2>1. Introdução</h2>
+    <p>Este Relatório descreve o projeto de controle de um servo motor utilização de um sensor ultrassônico e um arduino, com o objetivo de desenvolver habilidades em eletrônica e programação.</p>
+    </section>
+
+    <section id="objetivos">
+    <h2>2. Objetivos</h2>
+    <p>O principal objetivo é fazer o controle da direção do servo motor com a utilização de um sensor ultrassônico em um microcontrolador Arduino.</p>
+    </section>
+
+    <section id="materiais">
+        <h2>3. Materiais utilizados</h2>
+        <ul type="square">
+            <li>Arduino</li>
+            <li>1 Sensor ultrassônico</li>
+            <li>1 Servo motor</li>
+            <li>Protoboard</li>
+            <li>Fios de conexão</li>
+        </ul>
+    </section>
+
+    <section id="diagrama">
+        <h2>4. Diagrama do circuito</h2>
+        <p>Abaixo está o diagrama do circuito projetado no Tinkercad:</p>
+    </section>
+    <img src="img/Diagrama Tinkercad.png.jpg" alt="Diagrama do Circuito" />
+
+    <section id="codigo">
+        <h2>5. Código Fonte</h2>
+        <pre>
+            #include <Servo.h>
+
+                int cm = 0;
+                long distancia, duracao;
+                int posicao1 = 180;
+                int posicao2 = 1;
+                Servo meuServo;
+                
+                const int Pecho = 7; 
+                const int Ptrig = 8; 
+                
+                void setup() {
+                  Serial.begin(9600);
+                  pinMode(Pecho, INPUT);
+                  pinMode(Ptrig, OUTPUT);
+                  meuServo.attach(13);
+                }
+                
+                void loop() {
+                  digitalWrite(Ptrig, LOW);
+                  delayMicroseconds(2);
+                  digitalWrite(Ptrig, HIGH);
+                  delayMicroseconds(10); 
+                  digitalWrite(Ptrig, LOW);
+                
+                  duracao = pulseIn(Pecho, HIGH);
+                  distancia = (duracao / 2) / 29.1;
+                  
+                  float ang = map(distancia, 50, 230, 0, 180);
+                  Serial.println(ang);
+                
+                  meuServo.write(constrain(ang, 0, 180)); 
+                  delay(400);
+                }
+        </pre>
+    </section>
+
+    <section id="procedimentos">
+        <h2>6. Procedimentos</h2>
+        <p>O sensor ultrassônico e o servo motor foram conectados aos pinos digitais e analogicos do Arduino conforme o diagrama, e o código foi carregado na placa.</p>
+    </section>
+
+    <section id="resultados">
+        <h2>7. Resultados</h2>
+        <p>O braço do servo motor se moveu conforme o esperado, alternando sua direção conforme o objeto se aproxima e/ou se afasta do sensor ultrassônico.</p>
+    </section>
+
+    <section id="discussao">
+        <h2>8. Discussão</h2>
+        <p>O funcionamento do circuito aconteceu de forma satisfatoria e conforme o esperado.</p>
+    </section>
+
+    <section id="conclusao">
+        <h2>9. Conclusão</h2>
+        <p>Após muitas tentativas e erros o projeto foi bem sucedido, permitindo a pratica dos conceitos de eletronica e programação.</p>
+    </section>
+
+    <section id="referencias">
+        <h2>10. Referências</h2>
+        <p>Documentação do Arduino e materias utilizados no projeto.</p>
+    </section>
+
+        <h2>Perguntas</h2>
+        <ol>
+            <li>Qual o valor da corrente elétrica de um servo motor de 180°? Varia de<strong> 500mA a 1A</strong>, dependendo do modelo do motor.</li>
+            <li>Qual o valor da corrente elétrica de um sensor ultrassônico? Geralmente consome uma corrente de <strong>10 a 20mA</strong> </li>
+        </ol>
+
+</body>
+</html>
+
+<footer>
+    <p>Relatório elaborado por [Leonardo, André, Luciano].</p>
+    <p>Diciplina: Desenvolvimento de sistemas de informação</p>
+    <p>Laboratório C38. 28/10/2024 </p>
+    </footer>
+    <iframe width="200" height="300" src="https://www.youtube.com/embed/gWXLs_rbqWg" title="Arduino, servo motor e sensor ultrassônico." frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
